@@ -693,19 +693,19 @@ static void appendData(scicos_block * block, int input, double t, double *data)
              * However, the auto-scaling feature implemented is general and will work fine even for 
              */
             
-            //If the value to be plotted is greater than the current max, then update the current max
-            if(value > max_curr_val)
+            //If the value to be plotted is greater than or equal to the current max, then update the current max
+            if(value >= max_curr_val)
             {
             	max_curr_val = value + 10.0;
             	block->rpar[block->nrpar - 2 * (block->nin) + 2 * input+1] = max_curr_val;
             }	
             
-            //If the value to be plotted is smaller than the current min, then update the current min	
-            if(value < min_curr_val)
+            //If the value to be plotted is smaller than or equal to the current min, then update the current min	
+            if(value <= min_curr_val)
             {
             	min_curr_val = value - 10.0;
             	block->rpar[block->nrpar - 2 * (block->nin) + 2 * input] = min_curr_val;
-	        }
+	    }
             
             //If value has changed, call the setPolylinesBounds function to update the ranges
             if((max_curr_val != prev_max_curr_val) || (min_curr_val != prev_min_curr_val))
